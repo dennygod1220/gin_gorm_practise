@@ -8,6 +8,7 @@ import (
 type IDb interface {
 	Dsn() string
 	Dialector() gorm.Dialector
+	NewConnInfo() IDb
 }
 
 // 初始化資料庫連線

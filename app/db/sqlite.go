@@ -1,6 +1,8 @@
 package db
 
 import (
+	"os"
+
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )
@@ -15,4 +17,11 @@ func (s *Sqlite) Dsn() string {
 
 func (s *Sqlite) Dialector() gorm.Dialector {
 	return sqlite.Open(s.Dsn())
+}
+
+func (s *Sqlite) NewConnInfo() IDb {
+	s = &Sqlite{
+		DBName: os.Getenv("SQLITE"),
+	}
+	return s
 }

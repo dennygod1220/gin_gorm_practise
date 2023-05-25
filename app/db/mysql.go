@@ -1,6 +1,8 @@
 package db
 
 import (
+	"os"
+
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
@@ -19,5 +21,16 @@ func (m *Mysql) Dsn() string {
 
 func (m *Mysql) Dialector() gorm.Dialector {
 	return mysql.Open(m.Dsn())
+}
 
+func (m *Mysql) NewConnInfo() IDb {
+	m = &Mysql{
+		DB_Host:     os.Getenv("MYSQL_HOST"),
+		DB_Port:     os.Getenv("MYSQL_PORT"),
+		DB_Name:     os.Getenv("MYSQL_NAME"),
+		DB_User:     os.Getenv("MYSQL_USER"),
+		DB_Password: os.Getenv("MYSQL_PASSWORD"),
+	}
+
+	return m
 }
