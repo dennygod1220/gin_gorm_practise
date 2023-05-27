@@ -27,8 +27,9 @@ func main() {
 	conn := db.InitDb(d.NewConnInfo())
 
 	g := gen.NewGenerator(gen.Config{
-		OutPath: "./app/query",
-		Mode:    gen.WithoutContext | gen.WithDefaultQuery | gen.WithQueryInterface, // generate mode
+		OutPath:       "./app/query",
+		Mode:          gen.WithoutContext | gen.WithDefaultQuery | gen.WithQueryInterface, // generate mode
+		FieldNullable: true,
 	})
 
 	g.UseDB(conn)
@@ -39,7 +40,9 @@ func main() {
 		"mediumint": func(detailType gorm.ColumnType) (dataType string) { return "int64" },
 		"bigint":    func(detailType gorm.ColumnType) (dataType string) { return "int64" },
 		"int":       func(detailType gorm.ColumnType) (dataType string) { return "int64" },
+		"time":      func(columnType gorm.ColumnType) (dataType string) { return "datatypes.Time" },
 	}
+
 	// 要先于`ApplyBasic`执行
 	g.WithDataTypeMap(dataMap)
 
