@@ -4,6 +4,8 @@ import (
 	"gorm.io/gorm"
 )
 
+var DB *gorm.DB
+
 // db 接口
 type IDb interface {
 	Dsn() string
@@ -19,5 +21,7 @@ func InitDb(i IDb) *gorm.DB {
 		panic("failed to connect database")
 	}
 
-	return db
+	DB = db
+
+	return DB
 }

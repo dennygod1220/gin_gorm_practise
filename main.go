@@ -7,10 +7,7 @@ import (
 	"os"
 
 	"github.com/joho/godotenv"
-	"gorm.io/gorm"
 )
-
-var DB *gorm.DB
 
 func main() {
 	var d db.IDb
@@ -26,7 +23,7 @@ func main() {
 		d = &db.Mysql{}
 	}
 
-	DB = db.InitDb(d.NewConnInfo())
+	db.InitDb(d.NewConnInfo())
 
 	router := router.InitRouter()
 
